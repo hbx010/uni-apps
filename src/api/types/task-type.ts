@@ -34,3 +34,30 @@ export type TaskItemType = {
   status: string
   transportTaskId: string
 }
+type CargoPickUpPictureList = {
+  url: string
+}
+
+type CargoPictureList = {
+  url: string
+}
+
+type CertificatePictureList = {
+  url: string
+}
+
+type DeliverPictureList = {
+  url: string
+}
+type ExceptionList = {
+  exceptionDescribe: string
+  exceptionImagesList: ExceptionImagesList[]
+  exceptionPlace: string
+  exceptionTime: string
+  exceptionType: string
+  handleResult: string
+}
+
+type ExceptionImagesList = {
+  url: string
+}

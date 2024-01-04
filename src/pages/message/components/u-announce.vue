@@ -13,7 +13,6 @@
         <text class="iconfont icon-clear"></text>
         全部已读
       </view>
-      <!-- <view v-for="(item, index) in 100" :key="index">{{ index }}</view> -->
       <uni-list>
         <uni-list-item
           v-for="(item, index) in messageList"
