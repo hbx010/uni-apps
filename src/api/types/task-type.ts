@@ -34,6 +34,35 @@ export type TaskItemType = {
   status: string
   transportTaskId: string
 }
+export type responseTaskDetailType = {
+  actualArrivalTime: string
+  actualDepartureTime: string
+  cargoPickUpPictureList: CargoPickUpPictureList[]
+  cargoPictureList: CargoPictureList[]
+  certificatePictureList: CertificatePictureList[]
+  deliverPictureList: DeliverPictureList[]
+  driverId: string
+  driverName: string
+  endAddress: string
+  endAgencyId: string
+  endCity: string
+  endProvince: string
+  exceptionList: ExceptionList[]
+  finishHandoverName: string
+  finishHandoverPhone: string
+  id: string
+  licensePlate: string
+  planArrivalTime: string
+  planDepartureTime: string
+  startAddress: string
+  startAgencyId: string
+  startCity: string
+  startHandoverName: string
+  startHandoverPhone: string
+  startProvince: string
+  status: number
+  transportTaskId: string
+}
 type CargoPickUpPictureList = {
   url: string
 }
