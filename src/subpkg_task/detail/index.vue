@@ -1,6 +1,6 @@
 <template>
   <view class="detail">
-    <!-- {{ detailInfo }} -->
+    {{ detailInfo }}
   </view>
 </template>
 <script setup lang="ts">
