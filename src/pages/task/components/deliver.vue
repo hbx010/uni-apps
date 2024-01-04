@@ -27,7 +27,7 @@ const isTriggered = ref<boolean>(false)
 const hasMore = ref<boolean>(true)
 // 初始化数据
 const isEmpty = ref(true)
-const taskListType = ref<TaskItemType[]>([])
+const taskList = ref<TaskItemType[]>([])
 const getTaskList = async () => {
   try {
     const res = await taskList({
@@ -36,12 +36,12 @@ const getTaskList = async () => {
       status: 1,
     })
     if (res.code !== 200) return uni.utils.toast('请求失败，请重试')
-    if (page.value === 1) taskListType.value = []
-    taskListType.value = [...taskListType.value, ...(res.data.items || [])]
+    if (page.value === 1) taskList.value = []
+    taskList.value = [...taskList.value, ...(res.data.items || [])]
     page.value++
     console.log('page.value', page.value)
     if (page.value > res.data.pages) hasMore.value = false
-    if (taskListType.value.length > 0) isEmpty.value = false
+    if (taskList.value.length > 0) isEmpty.value = false
   } catch (error) {
     console.log('error', error)
   }
