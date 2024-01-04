@@ -1,36 +1,74 @@
 <template>
-  <scroll-view class="scroll-view" @refresherrefresh="onScrollViewRefresh" refresher-enabled refresher-background="#fff"
-    :refresher-triggered="isTriggered" @scrolltolower="onScrollToLower" scroll-y>
+  <scroll-view
+    class="scroll-view"
+    @refresherrefresh="onScrollViewRefresh"
+    refresher-enabled
+    refresher-background="#fff"
+    :refresher-triggered="isTriggered"
+    @scrolltolower="onScrollToLower"
+    scroll-y
+  >
     <view class="scroll-view-wrapper">
-      <view v-for="(item, index) in 100" :key="index">{{ index }}</view>
+      <view class="task-card" v-for="(item, index) in taskListArr" :key="index">
+        <navigator :url="`/subpkg_task/detail/index?jobId=${item.id}`">
+          <view class="header">
+            <text class="no">任务编号: {{ item.transportTaskId }}</text>
+            <view class="status" v-if="item.actualArrivalTime > item.planDepartureTime"
+              >已延迟</view
+            >
+          </view>
+
+          <view class="body">
+            <view class="timeline">
+              <view class="line">{{ item.startAddress }}</view>
+              <view class="line">{{ item.endAddress }} </view>
+            </view>
+          </view>
+        </navigator>
+
+        <view class="footer">
+          <view class="label">到货时间</view>
+          <view class="time">{{ item.planArrivalTime }}</view>
+          <navigator url="/subpkg_task/pickup/index" v-if="item.enablePickUp" class="action">
+            提货
+          </navigator>
+          <navigator v-else hover-class="none" class="action disabled"> 提货 </navigator>
+        </view>
+      </view>
     </view>
   </scroll-view>
-  <view v-if="isEmpty">无待提货物</view>
+  <view v-if="isEmpty">空数据</view>
 </template>
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { taskList } from '@/api/task'
-import type { TaskItemType } from '../../../api/types/task-type'
-import { onLoad } from '@dcloudio/uni-app'
 
+<script setup lang="ts">
+import { taskList } from '@/api/task'
+import type { TaskItemType } from '@/api/types/task-type'
+import { onLoad } from '@dcloudio/uni-app'
+import { ref } from 'vue'
+
+// 页码
 const page = ref<number>(1)
+// 条数
 const pageSize = ref<number>(5)
-// 开启下拉刷新
 const isTriggered = ref<boolean>(false)
 const hasMore = ref<boolean>(true)
-// 初始化数据
 const isEmpty = ref(true)
 const taskListArr = ref<TaskItemType[]>([])
+// 获取任务列表数据
 const getTaskList = async () => {
   try {
+    // 调用任务列表
     const res = await taskList({
       page: page.value,
       pageSize: pageSize.value,
       status: 1,
     })
-    if (res.code !== 200) return uni.utils.toast('请求失败，请重试')
+    // 判断请求
+    if (res.code !== 200) return uni.utils.toast('获取列表失败，稍后重试！')
     if (page.value === 1) taskListArr.value = []
+    // 合并
     taskListArr.value = [...taskListArr.value, ...(res.data.items || [])]
+    // 页数+
     page.value++
     console.log('page.value', page.value)
     if (page.value > res.data.pages) hasMore.value = false
@@ -39,16 +77,21 @@ const getTaskList = async () => {
     console.log('error', error)
   }
 }
+
+// 上拉加载
 const onScrollToLower = () => {
   if (!hasMore.value) return
   getTaskList()
 }
+
+// 下拉刷新
 const onScrollViewRefresh = async () => {
   isTriggered.value = true
   page.value = 1
   await getTaskList()
   isTriggered.value = false
 }
+
 onLoad(() => {
   getTaskList()
 })
@@ -56,7 +99,6 @@ onLoad(() => {
 <style scoped lang="scss">
 .scroll-view {
   height: 100%;
-
   .scroll-view-wrapper {
     overflow: hidden;
   }
@@ -72,13 +114,11 @@ onLoad(() => {
     align-items: center;
     justify-content: space-between;
   }
-
   .no {
     font-size: $uni-font-size-base;
     color: $uni-main-color;
     font-weight: 500;
   }
-
   .status {
     width: 104rpx;
     height: 44rpx;
@@ -92,7 +132,6 @@ onLoad(() => {
     color: #ef4f3f;
   }
 }
-
 .body {
   padding: 40rpx 0;
   border-bottom: 1rpx solid #f4f4f4;
@@ -117,7 +156,6 @@ onLoad(() => {
   position: absolute;
   left: -24rpx;
 }
-
 .timeline:before {
   content: '起';
   top: -1rpx;
@@ -127,12 +165,10 @@ onLoad(() => {
   bottom: -1rpx;
   background-color: $uni-primary;
 }
-
 .line {
   font-size: $uni-font-size-small;
   color: $uni-secondary-color;
   margin-top: 30rpx;
-
   &:first-child {
     margin-top: 0;
   }
@@ -140,19 +176,16 @@ onLoad(() => {
 .footer {
   padding: 20rpx 0;
   position: relative;
-
   &.flex {
     display: flex;
   }
 }
-
 .label,
 .time {
   font-size: $uni-font-size-small;
   margin-right: 15rpx;
   color: $uni-secondary-color;
 }
-
 .action {
   position: absolute;
   right: 0;
