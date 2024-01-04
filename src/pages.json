@@ -102,6 +102,23 @@
           }
         }
       ]
+    },
+    {
+      "root": "subpkg_task",
+      "pages": [
+        {
+          "path": "detail/index",
+          "style": {
+            "navigationBarTitleText": "detail"
+          }
+        },
+        {
+          "path": "pickup/index",
+          "style": {
+            "navigationBarTitleText": "pickup"
+          }
+        }
+      ]
     }
   ]
 }
