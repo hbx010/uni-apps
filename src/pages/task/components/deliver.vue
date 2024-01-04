@@ -29,7 +29,7 @@
         <view class="footer">
           <view class="label">到货时间</view>
           <view class="time">{{ item.planArrivalTime }}</view>
-          <navigator url="/subpkg_task/pickup/index" v-if="item.enablePickUp" class="action">
+          <navigator :url="`/subpkg_task/pickup/index`" v-if="item.enablePickUp" class="action">
             提货
           </navigator>
           <navigator v-else hover-class="none" class="action disabled"> 提货 </navigator>
