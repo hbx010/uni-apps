@@ -1,0 +1,15 @@
+.user-login {
+  padding: 66rpx;
+}
+
+.login-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 40rpx 0 80rpx;
+  line-height: 1;
+}
+
+.title {
+  font-size: 48rpx;
+}
