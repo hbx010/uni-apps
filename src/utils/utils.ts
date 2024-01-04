@@ -1,4 +1,5 @@
-import type { utilsType, icon } from './types/utilsType'
+import { utilsType, icon } from './types/utilsType'
+
 const utils: utilsType = {
   /**
    * 用户反馈（轻提示）

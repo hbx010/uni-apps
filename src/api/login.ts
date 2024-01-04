@@ -8,6 +8,11 @@ import type {
   responseTruckType,
 } from './types/login-type'
 
+/**
+ * 登录接口
+ * @param loginParams
+ * @returns
+ */
 export const login = (loginParams: loginParamsType) => {
   return http<string>({
     url: '/driver/login/account',
@@ -16,6 +21,9 @@ export const login = (loginParams: loginParamsType) => {
   })
 }
 
+/**
+ * 获取用户信息接口
+ */
 export const profile = () => {
   return http<responseProfileType>({
     url: '/driver/users',
@@ -23,6 +31,10 @@ export const profile = () => {
   })
 }
 
+/**
+ * 获取任务数据接口
+ * @param taskReportParams
+ */
 export const taskReport = (taskReportParams: taskReportParamsType) => {
   return http<responseTaskReportType>({
     url: '/driver/users/taskReport',
@@ -31,6 +43,9 @@ export const taskReport = (taskReportParams: taskReportParamsType) => {
   })
 }
 
+/**
+ * 获取车辆信息接口
+ */
 export const truck = () => {
   return http<responseTruckType>({
     url: '/driver/users/truck',

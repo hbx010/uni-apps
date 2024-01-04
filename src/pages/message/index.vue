@@ -30,6 +30,7 @@ type tabMetasType = {
   rendered: boolean
 }
 
+// Tab 标签页索引
 const tabIndex = ref<number>(0)
 const tabMetas = reactive<tabMetasType[]>([
   {
@@ -52,7 +53,7 @@ const onTabChange = (index: number) => {
   display: flex;
   flex-direction: column;
   /* #ifdef H5 */
-  height: calc(100vh - 94rpx);
+  height: calc(100vh - 94px);
   /* #endif */
 }
 

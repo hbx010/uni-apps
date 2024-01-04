@@ -11,49 +11,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import type { formDataType } from './types/type'
 import { accountRules } from './rules/rule'
-import { login } from '@/api/login'
-import { useUserStore } from '@/stores/user'
-const store = useUserStore()
-const redirectUrl = ref('')
-const routeType = ref('')
+import { useLogin } from '@/hooks/useLogin'
+const { form, formData, redirectUrl, routeType, submitLogin } = useLogin()
+
 onLoad((query) => {
   redirectUrl.value = query?.redirectUrl
   routeType.value = query?.routeType
 })
-const form = ref()
-const formData = ref<formDataType>({
-  account: 'xbsj001',
-  password: '123456',
-})
-const submitLogin = async () => {
-  try {
-    await form.value.validate()
-    const res = await login(formData.value)
-    if (res.code !== 200) return uni.utils.toast('登录失败，请重试！')
-    store.token = res.data
-    if (routeType.value === 'navigateTo') {
-      uni.navigateTo({
-        url: redirectUrl.value,
-      })
-    } else if (routeType.value === 'switchTab') {
-      uni.switchTab({
-        url: redirectUrl.value,
-      })
-    } else {
-      uni.switchTab({
-        url: '/pages/my/index',
-      })
-    }
-  } catch (e) {
-    console.log('error')
-  }
-}
-
-console.log('token', store.token)
 </script>
 
 <style lang="scss">
