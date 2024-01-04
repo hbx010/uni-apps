@@ -20,10 +20,6 @@ export const login = (loginParams: loginParamsType) => {
     data: loginParams,
   })
 }
-
-/**
- * 获取用户信息接口
- */
 export const profile = () => {
   return http<responseProfileType>({
     url: '/driver/users',
@@ -42,10 +38,6 @@ export const taskReport = (taskReportParams: taskReportParamsType) => {
     data: taskReportParams,
   })
 }
-
-/**
- * 获取车辆信息接口
- */
 export const truck = () => {
   return http<responseTruckType>({
     url: '/driver/users/truck',

@@ -1,4 +1,4 @@
-// 定义icon类型
+// icon类型
 export type icon = 'none' | 'success' | 'error' | 'fail' | 'exception' | 'loading'
 
 export type utilsType = {

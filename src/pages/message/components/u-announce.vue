@@ -9,7 +9,7 @@
     refresher-background="#f5f5f5"
   >
     <view class="scroll-view-wrapper">
-      <view class="message-action">
+      <view class="message-action" @click="handleReadAll">
         <text class="iconfont icon-clear"></text>
         全部已读
       </view>
@@ -23,7 +23,7 @@
           :ellipsis="1"
         >
           <template v-slot:header>
-            <text class="dot"></text>
+            <text v-if="item.isRead === 0" class="dot"></text>
           </template>
         </uni-list-item>
       </uni-list>
@@ -33,31 +33,31 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app'
-
+import { readAll } from '@/api/message'
 import { useMessageList } from '@/hooks/useMessage'
 const { page, isTriggered, hasMore, messageList, getMessageList } = useMessageList(200)
-
+// 全部已读
+const handleReadAll = async () => {
+  try {
+    const res = await readAll(200)
+    console.log('res=>', res)
+  } catch (error) {
+    console.log('error', error)
+  }
+}
 // 下拉刷新
 const onScrollViewRefresh = async () => {
-  // 将下拉刷新的状态重置为true
+  // 下拉刷新重置
   isTriggered.value = true
-
-  // 将页码重置为第一页
   page.value = 1
-
-  // 重新请求数据
   await getMessageList()
-
-  // 将下拉刷新的状态重置为false
   isTriggered.value = false
 }
 
 // 上拉加载
 const onScrollToLower = () => {
-  // 如果没有数据,则不进行请求数据
   console.log('hasMore', hasMore.value)
   if (!hasMore.value) return
-  // 继续请求数据
   getMessageList()
 }
 
@@ -104,6 +104,7 @@ onLoad(() => {
 
   ::v-deep .uni-list-item__content-title {
     font-size: 30rpx !important;
+    // padding-left: 20rpx;
     padding-left: 20rpx;
   }
 }
