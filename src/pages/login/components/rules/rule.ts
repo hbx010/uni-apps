@@ -1,4 +1,4 @@
-// 校验
+// 表单校验规则
 import { reactive } from 'vue'
 export const accountRules = reactive({
   account: {

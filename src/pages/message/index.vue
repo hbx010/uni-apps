@@ -30,6 +30,7 @@ type tabMetasType = {
   rendered: boolean
 }
 
+// Tab 标签页索引
 const tabIndex = ref<number>(0)
 const tabMetas = reactive<tabMetasType[]>([
   {

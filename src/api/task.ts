@@ -50,3 +50,25 @@ export const taskDetail = (jobId: string) => {
     method: 'GET',
   })
 }
+/**
+ * 提货接口
+ * @param takeDeliveryParams
+ */
+export const takeDelivery = (takeDeliveryParams: takeDeliveryParams) => {
+  return http({
+    url: '/driver/tasks/takeDelivery',
+    method: 'POST',
+    data: takeDeliveryParams,
+  });
+};
+/**
+ * 交付接口
+ * @param deliverParams
+ */
+export const deliver = (deliverParams: deliverParamsType) => {
+  return http({
+    url: '/driver/tasks/deliver',
+    method: 'POST',
+    data: deliverParams,
+  });
+};

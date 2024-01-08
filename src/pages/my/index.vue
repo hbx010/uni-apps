@@ -34,6 +34,16 @@
           :showArrow="item.showArrow"
           :title="item.title"
         />
+        <!-- <uni-list-item
+          to="/subpkg_user/task/index"
+          showArrow
+          title="任务数据"
+        />
+        <uni-list-item
+          to="/subpkg_user/settings/index"
+          showArrow
+          title="系统设置"
+        /> -->
       </uni-list>
     </view>
   </view>
@@ -71,17 +81,26 @@ const entryList = ref<entryListType[]>([
   },
 ])
 
-// 保存用户信息
+// 保存请求到的用户信息
 const userProfile = ref<responseProfileType>()
 
 // 获取任务数据
 const taskInfo = ref<responseTaskReportType>()
+
+// 初始化年
 const year = dayjs().year()
+// 初始化月
 const month = (m: number) => {
   m = m + 1
   return m < 10 ? '0' + m : '' + m
+  // if (m < 10) {
+  //   return "0" + m;
+  // } else {
+  //   return "" + m;
+  // }
 }
-// 获取用户信息
+
+// 获取用户信息方法
 const getUserProfile = async () => {
   try {
     const res = await profile()
@@ -91,7 +110,7 @@ const getUserProfile = async () => {
   }
 }
 
-// 获取任务数据
+// 获取任务数据方法
 const getTaskReport = async () => {
   try {
     const res = await taskReport({
@@ -105,9 +124,9 @@ const getTaskReport = async () => {
 }
 
 onLoad(() => {
-  // 调取用户信息
+  // 调用获取用户信息方法
   getUserProfile()
-  // 调取任务数据
+  // 调用获取任务数据方法
   getTaskReport()
 })
 </script>

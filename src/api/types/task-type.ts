@@ -90,3 +90,35 @@ type ExceptionList = {
 type ExceptionImagesList = {
   url: string
 }
+
+
+
+export type takeDeliveryParams = {
+  /**
+   * 提货凭证照片数组
+   */
+  cargoPickUpPictureList: CargoPickUpPictureList[];
+  /**
+   * 提货照片数组
+   */
+  cargoPictureList: CargoPictureList[];
+  /**
+   * 司机作业id
+   */
+  id: string;
+};
+
+export type deliverParamsType = {
+  /**
+   * 交付凭证列表
+   */
+  certificatePictureList: CargoPickUpPictureList[];
+  /**
+   * 交付图片列表
+   */
+  deliverPictureList: CargoPictureList[];
+  /**
+   * 司机作业id
+   */
+  id: string;
+};

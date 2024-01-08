@@ -29,7 +29,7 @@
         <view class="footer">
           <view class="label">到货时间</view>
           <view class="time">{{ item.planArrivalTime }}</view>
-          <navigator :url="`/subpkg_task/pickup/index`" v-if="item.enablePickUp" class="action">
+          <navigator url="/subpkg_task/pickup/index" v-if="item.enablePickUp" class="action">
             提货
           </navigator>
           <navigator v-else hover-class="none" class="action disabled"> 提货 </navigator>
@@ -41,64 +41,31 @@
 </template>
 
 <script setup lang="ts">
-import { taskList } from '@/api/task'
-import type { TaskItemType } from '@/api/types/task-type'
-import { onLoad } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { taskList } from '@/api/task';
+import type { TaskItemType } from '@/api/types/task-type';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
 
-// 页码
-const page = ref<number>(1)
-// 条数
-const pageSize = ref<number>(5)
-const isTriggered = ref<boolean>(false)
-const hasMore = ref<boolean>(true)
-const isEmpty = ref(true)
-const taskListArr = ref<TaskItemType[]>([])
-// 获取任务列表数据
-const getTaskList = async () => {
-  try {
-    // 调用任务列表
-    const res = await taskList({
-      page: page.value,
-      pageSize: pageSize.value,
-      status: 1,
-    })
-    // 判断请求
-    if (res.code !== 200) return uni.utils.toast('获取列表失败，稍后重试！')
-    if (page.value === 1) taskListArr.value = []
-    // 合并
-    taskListArr.value = [...taskListArr.value, ...(res.data.items || [])]
-    // 页数+
-    page.value++
-    console.log('page.value', page.value)
-    if (page.value > res.data.pages) hasMore.value = false
-    if (taskListArr.value.length > 0) isEmpty.value = false
-  } catch (error) {
-    console.log('error', error)
-  }
-}
-
-// 上拉加载
-const onScrollToLower = () => {
-  if (!hasMore.value) return
-  getTaskList()
-}
-
-// 下拉刷新
-const onScrollViewRefresh = async () => {
-  isTriggered.value = true
-  page.value = 1
-  await getTaskList()
-  isTriggered.value = false
-}
+import { useTaskList } from '@/hooks/useTaskList';
+const {
+  page,
+  onScrollToLower,
+  onScrollViewRefresh,
+  getTaskList,
+  isTriggered,
+  isEmpty,
+  taskListArr,
+} = useTaskList(1);
 
 onLoad(() => {
-  getTaskList()
-})
+  getTaskList();
+});
 </script>
+
 <style scoped lang="scss">
 .scroll-view {
   height: 100%;
+
   .scroll-view-wrapper {
     overflow: hidden;
   }
@@ -114,11 +81,13 @@ onLoad(() => {
     align-items: center;
     justify-content: space-between;
   }
+
   .no {
     font-size: $uni-font-size-base;
     color: $uni-main-color;
     font-weight: 500;
   }
+
   .status {
     width: 104rpx;
     height: 44rpx;
@@ -132,6 +101,7 @@ onLoad(() => {
     color: #ef4f3f;
   }
 }
+
 .body {
   padding: 40rpx 0;
   border-bottom: 1rpx solid #f4f4f4;
@@ -156,6 +126,7 @@ onLoad(() => {
   position: absolute;
   left: -24rpx;
 }
+
 .timeline:before {
   content: '起';
   top: -1rpx;
@@ -165,10 +136,12 @@ onLoad(() => {
   bottom: -1rpx;
   background-color: $uni-primary;
 }
+
 .line {
   font-size: $uni-font-size-small;
   color: $uni-secondary-color;
   margin-top: 30rpx;
+
   &:first-child {
     margin-top: 0;
   }
@@ -176,16 +149,19 @@ onLoad(() => {
 .footer {
   padding: 20rpx 0;
   position: relative;
+
   &.flex {
     display: flex;
   }
 }
+
 .label,
 .time {
   font-size: $uni-font-size-small;
   margin-right: 15rpx;
   color: $uni-secondary-color;
 }
+
 .action {
   position: absolute;
   right: 0;
