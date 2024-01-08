@@ -46,7 +46,7 @@ import type { TaskItemType } from '@/api/types/task-type';
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 
-import { useTaskList } from '@/hooks/useTaskList';
+import { useTaskList } from '../../../hooks/useTaskList';
 const {
   page,
   onScrollToLower,

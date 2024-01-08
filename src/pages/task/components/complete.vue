@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
 
-import { useTaskList } from '@/hooks/useTaskList';
+import { useTaskList } from '../../../hooks/useTaskList';
 const {
   page,
   onScrollToLower,
