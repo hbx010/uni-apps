@@ -63,11 +63,11 @@ export type responseTaskDetailType = {
   status: number
   transportTaskId: string
 }
-type CargoPickUpPictureList = {
+export type CargoPickUpPictureList = {
   url: string
 }
 
-type CargoPictureList = {
+export type CargoPictureList = {
   url: string
 }
 

@@ -1,5 +1,11 @@
 import { http } from "@/utils/http";
-import type { responseTaskDetailType, taskParamsType, taskResponseType } from './types/task-type'
+import type {
+  deliverParamsType,
+  responseTaskDetailType,
+  taskParamsType,
+  taskResponseType,
+  takeDeliveryParams,
+} from "./types/task-type";
 
 // type taskParamsType = {
 //   endTime?: string;
@@ -42,22 +48,22 @@ export const taskList = (taskParams: taskParamsType) => {
     url: "/driver/tasks/list",
     method: "GET",
     data: taskParams,
-  })
-}
+  });
+};
 export const taskDetail = (jobId: string) => {
   return http<responseTaskDetailType>({
     url: `/driver/tasks/details/${jobId}`,
-    method: 'GET',
-  })
-}
+    method: "GET",
+  });
+};
 /**
  * 提货接口
  * @param takeDeliveryParams
  */
 export const takeDelivery = (takeDeliveryParams: takeDeliveryParams) => {
   return http({
-    url: '/driver/tasks/takeDelivery',
-    method: 'POST',
+    url: "/driver/tasks/takeDelivery",
+    method: "POST",
     data: takeDeliveryParams,
   });
 };
@@ -67,8 +73,8 @@ export const takeDelivery = (takeDeliveryParams: takeDeliveryParams) => {
  */
 export const deliver = (deliverParams: deliverParamsType) => {
   return http({
-    url: '/driver/tasks/deliver',
-    method: 'POST',
+    url: "/driver/tasks/deliver",
+    method: "POST",
     data: deliverParams,
   });
 };

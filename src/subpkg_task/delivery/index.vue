@@ -22,7 +22,7 @@
 import type { CargoPickUpPictureList, CargoPictureList } from '@/api/types/task-type';
 import { onLoad } from '@dcloudio/uni-app';
 import { ref, computed } from 'vue';
-import { deliver } from '@/api/task.ts';
+import { deliver } from '../../api/task';
 // 回单凭证
 const receiptPictrues = ref<CargoPickUpPictureList[]>([]);
 // 货品照片
